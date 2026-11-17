@@ -60,8 +60,8 @@ button,[role="button"],select,summary,input{ min-height:36px }
 
 /* Cards */
 .cards{display:flex;flex-direction:column;gap:10px;margin-top:12px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 15px 13px;box-shadow:var(--shadow);display:flex;flex-wrap:wrap;gap:13px}
-.card-photo{flex:0 0 100%;width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border-radius:9px;background:var(--surface2)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 15px 13px;box-shadow:var(--shadow);display:flex;flex-wrap:nowrap;gap:13px;align-items:flex-start}
+.card-photo{flex:0 0 30%;width:30%;max-width:260px;aspect-ratio:16/9;max-height:140px;object-fit:cover;display:block;border-radius:8px;background:var(--surface2);margin-top:2px}
 .card-num{font-size:11px;font-weight:900;color:var(--muted);background:var(--surface2);border:1px solid var(--line);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;margin-top:2px}
 .card-main{min-width:0;flex:1}
 .card-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px}
@@ -136,7 +136,9 @@ body.embed .brand h1{font-size:16px}
 body.embed .brand p{display:none}
 body.embed .toolbar{top:6px}
 @media(max-width:520px){
-  .card{padding:12px}
+  .card{padding:12px;gap:10px}
+  .card-photo{flex-basis:30%;max-height:100px}
+  .card-num{width:24px;height:24px;font-size:10px}
   .brand h1{font-size:17px}
   .top-meta{display:none}
   .toolbar{position:static}
