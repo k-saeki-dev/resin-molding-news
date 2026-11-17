@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<title>樹脂成形ニュース（Garoon表示用）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800;900&family=Noto+Sans+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1ef; --surface:#ffffff; --surface2:#f7f8f7; --ink:#17201d; --muted:#5f6f6a; --line:#dde3df;
+  --accent:#0f766e; --accent-ink:#ffffff; --accent-soft:#e6f2f0;
+  --amber:#b45309; --amber-soft:#fef3c7; --blue:#1d4ed8; --blue-soft:#dbeafe;
+  --rose:#9f1239; --rose-soft:#ffe4e6; --violet:#5b21b6; --violet-soft:#ede9fe;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);
+  --radius:14px;
+}
+@media (prefers-color-scheme:dark){
+  :root{ --bg:#0f1513; --surface:#1a2220; --surface2:#222b28; --ink:#e8efec; --muted:#9fb0a9; --line:#2e3a36; --accent:#2dd4bf; --accent-ink:#06201c; --accent-soft:#14332e; --amber-soft:#3a2a0a; --blue-soft:#172a4a; --rose-soft:#3d1622; --violet-soft:#2a204a; --shadow:0 1px 3px rgba(0,0,0,.3); }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Noto Sans JP",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:15px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+button,[role="button"],select,summary,input{ min-height:36px }
+.mono{font-family:"Noto Sans Mono",monospace}
+
+/* Top bar */
+.topbar{background:var(--ink);color:#fff;padding:14px 0 12px}
+@media(prefers-color-scheme:dark){.topbar{background:#000}}
+.topbar-inner{max-width:1120px;margin:0 auto;padding:0 16px;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand-mark{width:40px;height:40px;border-radius:9px;background:var(--accent);display:grid;place-items:center;font-weight:900;font-size:19px;color:#fff;flex-shrink:0;letter-spacing:-.02em}
+.brand h1{font-size:19px;line-height:1.2;margin:0;font-weight:900;letter-spacing:.01em}
+.brand p{margin:2px 0 0;font-size:12px;opacity:.75;line-height:1.4}
+.top-meta{text-align:right;font-size:12px;line-height:1.5;opacity:.92}
+.top-meta strong{font-size:13px}
+.pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);padding:4px 9px;border-radius:999px;font-size:11px;font-weight:700}
+.dot{width:7px;height:7px;border-radius:50%;background:#34d399;display:inline-block}
+
+.wrap{max-width:1120px;margin:0 auto;padding:16px 16px 36px}
+.layout{display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start}
+@media(max-width:900px){.layout{grid-template-columns:1fr}}
+
+/* Toolbar */
+.toolbar{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow);position:sticky;top:10px;z-index:5}
+.toolbar-row{display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+.toolbar-label{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:2px}
+.chip{border:1px solid var(--line);background:var(--surface2);color:var(--ink);padding:7px 12px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;line-height:1}
+.chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+@media(prefers-color-scheme:dark){.chip[aria-pressed="true"]{background:var(--accent);color:#06201c;border-color:var(--accent)}}
+.chip:focus-visible,button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.search-row{margin-top:10px;display:flex;gap:8px}
+.search-row input{flex:1;border:1px solid var(--line);border-radius:9px;padding:9px 11px;background:var(--surface);color:var(--ink);font-size:14px;min-height:38px}
+.result-line{font-size:12px;color:var(--muted);margin-top:8px}
+.result-line strong{color:var(--ink)}
+
+/* Cards */
+.cards{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 15px 13px;box-shadow:var(--shadow);display:flex;gap:13px}
+.card-num{font-size:11px;font-weight:900;color:var(--muted);background:var(--surface2);border:1px solid var(--line);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;margin-top:2px}
+.card-main{min-width:0;flex:1}
+.card-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px}
+.tag{font-size:11px;font-weight:800;padding:3px 7px;border-radius:999px;line-height:1.2;white-space:nowrap}
+.tag-inj{background:var(--accent-soft);color:var(--accent)}
+.tag-blow{background:var(--blue-soft);color:var(--blue)}
+.tag-vac{background:var(--amber-soft);color:var(--amber)}
+.tag-mat{background:var(--violet-soft);color:var(--violet)}
+.tag-expo{background:#e0e7ff;color:#3730a3}
+@media(prefers-color-scheme:dark){.tag-expo{background:#252a4a;color:#a5b4fc}}
+.tag-auto{background:var(--rose-soft);color:var(--rose)}
+.tag-dom,.tag-oversea{background:var(--surface2);color:var(--muted);border:1px solid var(--line)}
+.date{font-size:12px;color:var(--muted);font-weight:600}
+.card h2{font-size:16px;line-height:1.45;margin:0 0 6px;font-weight:800}
+.card h2 a{color:var(--ink)}
+.card h2 a:hover{color:var(--accent);text-decoration:underline}
+.card p{margin:0;font-size:13.5px;line-height:1.7;color:#33413c}
+@media(prefers-color-scheme:dark){.card p{color:#cbd8d2}}
+.card-foot{margin-top:9px;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:12px;color:var(--muted)}
+.source{font-weight:700;color:var(--muted)}
+.readlink{font-weight:800;display:inline-flex;align-items:center;gap:4px;padding:6px 0}
+.why{margin-top:8px;background:var(--surface2);border-radius:9px;padding:8px 10px;font-size:12.5px;line-height:1.6}
+.why b{color:var(--accent)}
+.hidden{display:none !important}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:var(--radius);padding:22px;text-align:center;color:var(--muted)}
+
+/* Sidebar */
+.side{display:flex;flex-direction:column;gap:12px;position:sticky;top:10px}
+@media(max-width:900px){.side{position:static}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:15px;box-shadow:var(--shadow)}
+.panel h3{margin:0 0 8px;font-size:14px;font-weight:900;line-height:1.3}
+.panel p,.panel li{font-size:13px;line-height:1.7;color:#33413c}
+@media(prefers-color-scheme:dark){.panel p,.panel li{color:#cbd8d2}}
+.panel ol,.panel ul{margin:6px 0 0;padding-left:18px}
+.panel li{margin:4px 0}
+.panel label{font-size:12px;font-weight:800;display:block;margin:10px 0 5px}
+.panel input[type="url"],.panel select{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px 10px;background:var(--surface);color:var(--ink);font-size:13px}
+.codebox{background:#0f172a;color:#e2e8f0;border-radius:10px;padding:11px;font-size:11.5px;line-height:1.6;overflow:auto;white-space:pre-wrap;word-break:break-all;margin-top:8px}
+.btn{width:100%;border:0;border-radius:9px;padding:10px 12px;font-weight:800;cursor:pointer;font-size:13px}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+@media(prefers-color-scheme:light){.btn-primary{color:#fff}}
+.btn-secondary{background:var(--surface2);color:var(--ink);border:1px solid var(--line);margin-top:7px}
+.btn:active{transform:translateY(1px)}
+.copied{font-size:12px;color:var(--accent);font-weight:700;min-height:18px;margin-top:6px}
+.spec{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.spec div{background:var(--surface2);border-radius:9px;padding:9px}
+.spec dt{font-size:11px;color:var(--muted);font-weight:700}
+.spec dd{margin:2px 0 0;font-size:13px;font-weight:800}
+.note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:8px}
+
+/* Preview widths */
+.width-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.width-btns button{flex:1;border:1px solid var(--line);background:var(--surface2);border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;padding:8px 4px}
+.width-btns button.active{background:var(--ink);color:#fff}
+.preview-frame{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:10px;background:var(--bg);transition:max-width .2s}
+.preview-inner{padding:10px}
+.preview-inner .mini{font-size:12px;line-height:1.5}
+.mini-card{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:9px 10px;margin-top:7px}
+.mini-card b{font-size:13px;line-height:1.4;display:block}
+
+footer{max-width:1120px;margin:0 auto;padding:0 16px 28px;color:var(--muted);font-size:12px;line-height:1.7}
+
+/* Embed mode for Garoon iframe */
+body.embed .topbar{padding:8px 0}
+body.embed .topbar .top-meta,body.embed .side,body.embed .garoon-guide,body.embed footer .non-embed{display:none !important}
+body.embed .layout{grid-template-columns:1fr}
+body.embed .wrap{padding:10px 10px 16px;max-width:100%}
+body.embed .brand h1{font-size:16px}
+body.embed .brand p{display:none}
+body.embed .toolbar{top:6px}
+@media(max-width:520px){
+  .card{padding:12px}
+  .brand h1{font-size:17px}
+  .top-meta{display:none}
+  .toolbar{position:static}
+}
+@media print{.side,.toolbar{display:none}.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">樹</div>
+      <div>
+        <h1>樹脂成形ニュース</h1>
+        <p>ブロー ／ 射出 ／ 真空・熱成形 ／ 材料・自動車部品 — Garoon個人ポータル表示用</p>
+      </div>
+    </div>
+    <div class="top-meta">
+      <span class="pill"><span class="dot"></span> テスト運用中</span>
+      <div style="margin-top:6px"><strong>2026年11月17日（火）時点</strong> の公開情報で編集<br>全11件 ・ 出典リンク付き</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="layout">
+    <main>
+      <section class="toolbar" aria-label="絞り込み">
+        <div class="toolbar-row" id="methodFilters">
+          <span class="toolbar-label">成形・分野</span>
+          <button class="chip" data-filter="all" aria-pressed="true">すべて</button>
+          <button class="chip" data-filter="injection" aria-pressed="false">射出成形</button>
+          <button class="chip" data-filter="blow" aria-pressed="false">ブロー成形</button>
+          <button class="chip" data-filter="vacuum" aria-pressed="false">真空・熱成形</button>
+          <button class="chip" data-filter="material" aria-pressed="false">材料・部品</button>
+          <button class="chip" data-filter="expo" aria-pressed="false">展示会</button>
+          <button class="chip" data-filter="auto" aria-pressed="false">自動車</button>
+        </div>
+        <div class="toolbar-row" style="margin-top:8px" id="regionFilters">
+          <span class="toolbar-label">地域</span>
+          <button class="chip" data-region="all" aria-pressed="true">国内＋海外</button>
+          <button class="chip" data-region="domestic" aria-pressed="false">国内のみ</button>
+          <button class="chip" data-region="overseas" aria-pressed="false">海外のみ</button>
+        </div>
+        <div class="search-row">
+          <input id="q" type="search" placeholder="キーワードで探す（例：軽量化、再生材、PA6、IPF）" aria-label="キーワード検索">
+        </div>
+        <div class="result-line" id="resultLine"><strong>11件</strong> を表示中 — 注目順（テーマ別）。日付は記事・発表の日付、展示会／実証は開催・開始日を別記しています。</div>
+      </section>
+
+      <div class="cards" id="cards">
+        <!-- 1 -->
+        <article class="card" data-methods="injection" data-region="domestic" data-text="NSK ボールねじ 電動射出成形機 グリス 射出成形機 省メンテナンス MONOist">
+          <div class="card-num">1</div><div class="card-main">
+            <div class="card-meta"><span class="tag tag-inj">射出成形</span><span class="tag tag-dom">国内</span><span class="date">2026年11月16日</span></div>
+            <h2><a href="https://monoist.itmedia.co.jp/mn/articles/2611/16/news026.html" target="_blank" rel="noopener">NSK、5年間グリス無補給を実現する高負荷用ボールねじを開発 — 電動射出成形機向け</a></h2>
+            <p>日本精工（NSK）が電動射出成形機の型締・射出軸向けに、5年間グリス無補給の高負荷ボールねじを開発。現行品比でグリス使用量を約64％削減でき、自動給脂の手間と停止時間を減らす狙い。成形機の保守・省人化に直結する部品側の進化。</p>
+            <div class="why"><b>見るポイント：</b>成形条件だけでなく「止めない工場」へ。電動機のメンテナンス間隔が延びると、段取りと保全計画の考え方が変わる。</div>
+            <div class="card-foot"><span class="source">出典：MONOist</span><a class="readlink" href="https://monoist.itmedia.co.jp/mn/articles/2611/16/news026.html" target="_blank" rel="noopener">原文を読む →</a></div>
+          </div>
+        </article>
+
+        <!-- 2 -->
+        <article class="card" data-methods="injection material auto" data-region="overseas" data-text="Toyota Tacoma トラックベッド BASF ENGEL 12000トン PA6 射出成形 SPE Grand Award">
+          <div class="card-num">2</div><div class="card-main">
+            <div class="card-meta"><span class="tag tag-inj">射出成形</span><span class="tag tag-auto">自動車</span><span class="tag tag-oversea">海外</span><span class="date">2026年11月5日</span></div>
+            <h2><a href="https://www.basf.com/us/en/media/news-releases/2026/11/P-US-26-43" target="_blank" rel="noopener">BASF・トヨタ・Vuteq、Tacomaの樹脂製トラックベッドでSPEイノベーション大賞グランプリ</a></h2>
+            <p>2026年型Toyota Tacomaの荷台を、塗装SMCからPA6（短ガラス繊維50％）の射出成形一体品へ置換。ENGELが専用に作った世界最大級12,000トン機（金型約125トン、ショット約30kg）で、3本の構造クロスメンバーをオーバーモールドしファスナーなしで一体化した。</p>
+            <div class="why"><b>見るポイント：</b>大型射出の限界更新。材料・金型・成形機を一体で設計しないと成立しないスケール。</div>
+            <div class="card-foot"><span class="source">出典：BASF（公式リリース）</span><a class="readlink" href="https://www.basf.com/us/en/media/news-releases/2026/11/P-US-26-43" target="_blank" rel="noopener">原文を読む →</a></div>
+          </div>
+        </article>
+
+        <!-- 3 -->
+        <article class="card" data-methods="injection material auto" data-region="overseas" data-text="Ford Everest ドアハンドル ベゼル 塗装レス ピアノブラック PA6 BASF Supavut">
+          <div class="card-num">3</div><div class="card-main">
+            <div class="card-meta"><span class="tag tag-inj">射出成形</span><span class="tag tag-auto">自動車</span><span class="tag tag-oversea">海外</span><span class="date">2026年11月5日</span></div>
+            <h2><a href="https://www.basf.com/us/en/media/news-releases/2026/11/P-US-26-41" target="_blank" rel="noopener">塗装なしでピアノブラック — Ford Everest内装ベゼルがSPE材料部門賞</a></h2>
+            <p>BASFのUltramid Deep Gloss（PA6ブレンド）をタイSupavutが射出成形。急加熱・急冷金型なし、標準の単段射出で高光沢のピアノブラックを再現したFord初の事例。単一材料構成で、廃棄時の材料回収もしやすくしている。</p>
+            <div class="why"><b>見るポイント：</b>塗装レスはコストだけでなくVOC・工程削減にも効く。肉厚フローとゲート設計でウェルドを目立たせない工夫が核心。</div>
+            <div class="card-foot"><span class="source">出典：BASF（公式リリース）</span><a class="readlink" href="https://www.basf.com/us/en/media/news-releases/2026/11/P-US-26-41" target="_blank" rel="noopener">原文を読む →</a></div>
+          </div>
+        </article>
+
+        <!-- 4 -->
+        <article class="card" data-methods="blow" data-region="overseas" data-text="KHS 延伸ブロー PETボトル 軽量化 Airback 圧縮空気回収 15.5g">
+          <div class="card-num">4</div><div class="card-main">
+            <div class="card-meta"><span class="tag tag-blow">ブロー成形</span><span class="tag tag-oversea">海外</span><span class="date">2026年11月11日</span></div>
+            <h2><a href="https://www.sputnik-agentur.de/wp-content/uploads/2026/11/PR_Stretch-blow-molding.pdf" target="_blank" rel="noopener">KHS延伸ブロー：1.5L PETボトル15.5gまで軽量化、圧縮空気回収で最大60％削減</a></h2>
+            <p>独KHSがNIR加熱とDouble Gate加熱コンセプト、最新圧縮空気回収「Airback 7 PRO」を組み合わせた延伸ブロー技術を発表。Double Gateでエネルギー最大40％削減、Airbackで高圧エア需要を最大60％削減。軽量化例「UltraLite」は1.5L静水ボトルで15.5g。</p>
+            <div class="why"><b>見るポイント：</b>ブローの省エネは加熱＋エア回収の合わせ技。ボトル軽量化とラインのランニングコストを同時に下げる方向。</div>
+            <div class="card-foot"><span class="source">出典：KHS プレスリリース（PDF）</span><a class="readlink" href="https://www.sputnik-agentur.de/wp-content/uploads/2026/11/PR_Stretch-blow-molding.pdf" target="_blank" rel="noopener">原文を読む →</a></div>
+          </div>
+        </article>
+
+        <!-- 5 -->
+        <article class="card" data-methods="expo injection blow" data-region="domestic" data-text="IPF Japan 2026 幕張メッセ 射出成形機 住友重機械 日本製鋼所 芝浦機械 ソディック">
+          <div class="card-num">5</div><div class="card-main">
+            <div class="card-meta"><span class="tag tag-expo">展示会</span><span class="tag tag-inj">射出成形</span><span class="tag tag-dom">国内</span><span class="date">まとめ：2026年11月5日時点 ／ 開催：12月1–5日</span></div>
+            <h2><a href="https://plastics-japan.com/archives/9602" target="_blank" rel="noopener">IPF Japan 2026 射出成形機メーカー別出展案内 — AI・再生材・発泡が焦点</a></h2>
+            <p>12月1–5日、幕張メッセで3年に1度のIPF Japan 2026。住友重機械工業はAI-Drive Optima＋と型内塗装、日本製鋼所はSOFIT物理発泡＋フィルムインサート、芝浦機械は再生材変動への自動補正、ソディックは粉砕材の直接利用などを予告。各社の出展確定度を整理した案内。</p>
+            <div class="why"><b>見るポイント：</b>行く前に見るメーカーを絞れる。再生材対応と品質予測が、今回の射出機の共通テーマ。</div>
+            <div class="card-foot"><span class="source">出典：プラスチックス・ジャパン</span><a class="readlink" href="https://plastics-japan.com/archives/9602" target="_blank" rel="noopener">原文を読む →</a></div>
+          </div>
+        </article>
+
+        <!-- 6 -->
+        <article class="card" data-methods="material auto" data-region="domestic" data-text="マーレ MAHLE 樹脂製フロントカバー 軽量化 30% 人とくるまのテクノロジー展">
+          <div class="card-num">6</div><div class="card-main">
+            <div class="card-meta"><span class="tag tag-mat">材料・部品</span><span class="tag tag-auto">自動車</span><span class="tag tag-dom">国内発表</span><span class="date">2026年5月（人テク展）</span></div>
+            <h2><a href="http://news.yahoo.co.jp/articles/b61661b1f12c05e9928df6a43c0a4cd636c87bd9" target="_blank" rel="noopener">マーレ、世界初の「樹脂製フロントカバー」を人テク展で公開 — アルミ比約30％軽量化</a></h2>
+            <p>従来アルミが主流だったエンジン前面のフロントカバーを、オイルシール一体の完全樹脂製へ置換。約30％の軽量化に加え、部品点数と組立工数の削減も狙う。熱マネジメント部品のモジュール化と併せ、人とくるまのテクノロジー展2026で披露された。</p>
+            <div class="why"><b>見るポイント：</b>剛性・耐熱で金属が当たり前だった部位の樹脂化。シール一体成形が量産成立の鍵。</div>
+            <div class="card-foot"><span class="source">出典：くるまのニュース／Yahoo!ニュース</span><a class="readlink" href="http://news.yahoo.co.jp/articles/b61661b1f12c05e9928df6a43c0a4cd636c87bd9" target="_blank" rel="noopener">原文を読む →</a></div>
+          </div>
+        </article>
+
+        <!-- 7 -->
+        <article class="card" data-methods="vacuum material" data-region="domestic" data-text="森永乳業 ヨーグルト容器 水平リサイクル ケミカルリサイクル ポリスチレン シート成形 デンカ 東洋スチレン">
+          <div class="card-num">7</div><div class="card-main">
+            <div class="card-meta"><span class="tag tag-vac">真空・熱成形</span><span class="tag tag-dom">国内</span><span class="date">発表：2026年11月 ／ 実証開始：12月1日</span></div>
+            <h2><a href="https://news.toremaga.com/nation/eco/4326617.html" target="_blank" rel="noopener">ヨーグルト4個パック容器の水平リサイクル実証 — 森永乳業・デンカ・東洋スチレン・ヤオコー</a></h2>
+            <p>ポリスチレン製シートから成形されるヨーグルト容器を店頭回収し、ケミカルリサイクルで原料に戻して再び容器シート化する実証を、ヤオコー東大和店で12月1日から開始。工場で出る容器端材もマスバランス方式で循環させる二本立ての検証。</p>
+            <div class="why"><b>見るポイント：</b>シート成形品は「作る」だけでなく回収設計までが競争力。食品容器の水平リサイクルの実装例として要注視。</div>
+            <div class="card-foot"><span class="source">出典：とれまがニュース（PR TIMES配信）</span><a class="readlink" href="https://news.toremaga.com/nation/eco/4326617.html" target="_blank" rel="noopener">原文を読む →</a></div>
+          </div>
+        </article>
+
+        <!-- 8 -->
+        <article class="card" data-methods="material auto expo" data-region="domestic" data-text="人とくるまのテクノロジー展 2026 CFRP 塗装レス リサイクル 東レ BASF 自動車プラスチック">
+          <div class="card-num">8</div><div class="card-main">
+            <div class="card-meta"><span class="tag tag-mat">材料・部品</span><span class="tag tag-auto">自動車</span><span class="tag tag-dom">国内</span><span class="date">2026年5月開催レポート</span></div>
+            <h2><a href="https://plastics-japan.com/archives/9378" target="_blank" rel="noopener">人テク展2026に見る自動車樹脂の変化 — 軽量化から「意匠・光・リサイクル」を担う中核材料へ</a></h2>
+            <p>CFRP／CFRTPの軽量化に加え、塗装レス外装、加飾フィルム、センサー対応、リサイクルPC/ABS、PMMAケミカルリサイクルなど多面的な提案を整理したレポート。東レの次世代モビリティ提案やBASFのCAE前提の金属代替など、材料と加工を一体で考える流れが鮮明。</p>
+            <div class="why"><b>見るポイント：</b>自動車樹脂の評価軸が増えている。設計段階で意匠・センサー透過・リサイクル性まで織り込む必要性。</div>
+            <div class="card-foot"><span class="source">出典：プラスチックス・ジャパン</span><a class="readlink" href="https://plastics-japan.com/archives/9378" target="_blank" rel="noopener">原文を読む →</a></div>
+          </div>
+        </article>
+
+        <!-- 9 -->
+        <article class="card" data-methods="blow" data-region="overseas" data-text="ブロー成形 全電動 AI PCR Kautex Uniloy Plastics Machinery Manufacturing K2025">
+          <div class="card-num">9</div><div class="card-main">
+            <div class="card-meta"><span class="tag tag-blow">ブロー成形</span><span class="tag tag-oversea">海外</span><span class="date">2026年9月11日</span></div>
+            <h2><a href="https://www.plasticsmachinerymanufacturing.com/blow-molding/article/55404212/all-electric-ai-and-pcr-ready-whats-new-in-blow-molding" target="_blank" rel="noopener">ブロー成形の新潮流は「全電動・AI・PCR対応」 — K 2025以降の新機種まとめ</a></h2>
+            <p>Uniloyの全電動機は油圧比で最大60％省エネ、Kautex KEB Greenなど各社が全電動化を加速。BBMのAI制御やSacmiの生成AIアシスタント「Gilda-AI」など、操作・保全を言語で支援する動きも。PCR・リグラインド対応と高速型替えが共通仕様になりつつある。</p>
+            <div class="why"><b>見るポイント：</b>ブローでも電動化とAI支援が標準装備化。再生材を回せるかどうかが設備選定の分かれ目。</div>
+            <div class="card-foot"><span class="source">出典：Plastics Machinery Manufacturing</span><a class="readlink" href="https://www.plasticsmachinerymanufacturing.com/blow-molding/article/55404212/all-electric-ai-and-pcr-ready-whats-new-in-blow-molding" target="_blank" rel="noopener">原文を読む →</a></div>
+          </div>
+        </article>
+
+        <!-- 10 -->
+        <article class="card" data-methods="blow" data-region="domestic" data-text="押出ブロー成形機 市場規模 YH Research Bekum 再生プラスチック 全電動">
+          <div class="card-num">10</div><div class="card-main">
+            <div class="card-meta"><span class="tag tag-blow">ブロー成形</span><span class="tag tag-dom">市場調査</span><span class="date">2026年10月21日</span></div>
+            <h2><a href="https://newscast.jp/smart/news/8523183" target="_blank" rel="noopener">押出ブロー成形機の世界市場、2026年26.4億ドル → 2032年29億ドルへ（CAGR 1.6％）</a></h2>
+            <p>YH Researchの調査では、中空成形機市場は緩やかに拡大。ボトル・工業用容器・自動車部品が用途の柱。BekumがPACK EXPO 2026で再生プラスチック活用・軽量化・全電動機を訴求するなど、市場の伸びは台数より「再生材対応と省エネ」への置き換え需要が中心。</p>
+            <div class="why"><b>見るポイント：</b>成長率は小さくても中身は入れ替わり需要。既存油圧機の更新タイミングを読む材料に。</div>
+            <div class="card-foot"><span class="source">出典：NEWSCAST（YH Research）</span><a class="readlink" href="https://newscast.jp/smart/news/8523183" target="_blank" rel="noopener">原文を読む →</a></div>
+          </div>
+        </article>
+
+        <!-- 11 -->
+        <article class="card" data-methods="material vacuum" data-region="domestic" data-text="Hamee Parallel Plastics 再生材100% アップサイクル 来歴証明書 気候変動アワード">
+          <div class="card-num">11</div><div class="card-main">
+            <div class="card-meta"><span class="tag tag-mat">材料・部品</span><span class="tag tag-dom">国内</span><span class="date">2026年11月13日</span></div>
+            <h2><a href="https://news.infoseek.co.jp/article/prtimes_000001736_000009971/" target="_blank" rel="noopener">再生材100％成形「Parallel Plastics」が気候変動アワード特別賞 — 来歴証明書付き</a></h2>
+            <p>Hameeのアップサイクルサービスが小田原箱根気候変動アワード特別賞。分別・洗浄・ペレット化を省きバージン材を加えず成形し、混ざった色を意匠にする手法。2026年7月からは材料の出どころから成形・製品化までを辿れる来歴証明書を納品時に添付。累計製造1万個超。</p>
+            <div class="why"><b>見るポイント：</b>再生材の「証明できること」が価値になる流れ。2026年4月施行の改正資源有効利用促進法への対応例としても参考。</div>
+            <div class="card-foot"><span class="source">出典：Infoseekニュース（PR TIMES）</span><a class="readlink" href="https://news.infoseek.co.jp/article/prtimes_000001736_000009971/" target="_blank" rel="noopener">原文を読む →</a></div>
+          </div>
+        </article>
+
+        <div class="empty hidden" id="emptyState">条件に合う記事がありません。絞り込みを「すべて」に戻すか、キーワードを変えてください。</div>
+      </div>
+
+      <p class="note" style="margin-top:14px">編集方針：成形方法（ブロー／射出／真空・熱成形／回転成形ほか）と国内／海外でタグ付けし、自動車樹脂部品を優先。各記事は出典の公開情報を要約したもので、判断は原文で確認してください。このページは2026年11月17日時点のスナップショットです。次回更新時に記事は入れ替わります。</p>
+    </main>
+
+    <aside class="side">
+      <section class="panel garoon-guide" aria-label="Garoonへの貼り付け方">
+        <h3>Garoon個人ポータルへの貼り方</h3>
+        <p>クラウド版Garoon（*.cybozu.com）の個人ポータルに、<strong>HTMLポートレット＋iframe</strong>で置くのがテスト段階では最速です。Garoon側は開くたびにこのページの最新版を表示するので、Garoon側の再編集は不要になります。</p>
+        <ol>
+          <li>このページを公開し、共有リンク（URL）を控える</li>
+          <li>Garoon：個人設定／ポータル編集 → ポートレット追加 → <strong>HTMLポートレット</strong></li>
+          <li>下で作るiframeコードを貼って保存</li>
+          <li>ポータルを再読み込みして表示確認（高さは下で調整）</li>
+        </ol>
+        <label for="pageUrl">このページの公開URL（貼り付け用）</label>
+        <input id="pageUrl" type="url" placeholder="https://（公開リンクをここに貼る）" autocomplete="off">
+        <label for="heightSel">iframeの高さ</label>
+        <select id="heightSel">
+          <option value="520">520px — ポータルの1段分（コンパクト）</option>
+          <option value="640" selected>640px — おすすめ（記事4〜5件が見える）</option>
+          <option value="800">800px — 大きく見せたいとき</option>
+        </select>
+        <div class="codebox mono" id="codeBox">&lt;iframe src="[公開URL]?embed=1" width="100%" height="640" style="border:0;border-radius:8px" loading="lazy" title="樹脂成形ニュース"&gt;&lt;/iframe&gt;</div>
+        <button class="btn btn-primary" id="copyBtn" type="button">iframeコードをコピーする</button>
+        <button class="btn btn-secondary" id="previewEmbedBtn" type="button">Garoon表示（embed）でこのページをプレビュー</button>
+        <div class="copied" id="copyMsg" role="status" aria-live="polite"></div>
+        <p class="note">末尾の <span class="mono">?embed=1</span> が肝心です。これが付くと案内パネルが消え、ニュース一覧だけの細幅表示になります。うまく表示されない場合は、Garoon管理者のiframe許可設定（外部サイト埋め込み）が原因のことがあります。そのときは次の「代替案」を使ってください。</p>
+      </section>
+
+      <section class="panel">
+        <h3>幅のシミュレーション</h3>
+        <p>個人ポータルは列幅が狭くなりがちです。想定幅で崩れないか確認できます。</p>
+        <div class="width-btns" role="group" aria-label="幅切替">
+          <button type="button" data-w="340">スマホ幅<br>340px</button>
+          <button type="button" data-w="480" class="active">ポータル1列<br>480px</button>
+          <button type="button" data-w="720">ポータル2列<br>720px</button>
+        </div>
+        <div class="preview-frame" id="previewFrame" style="max-width:480px">
+          <div class="preview-inner">
+            <div class="mini"><strong>樹脂成形ニュース</strong> ・ 11月17日更新</div>
+            <div class="mini-card"><span class="tag tag-inj">射出</span> <span class="tag tag-auto">自動車</span><b>Tacoma樹脂ベッドがSPE大賞 — 12,000トン機で一体成形</b><span style="color:var(--muted)">PA6一体成形でSMCを置換。金型125トン。</span></div>
+            <div class="mini-card"><span class="tag tag-blow">ブロー</span><b>KHS延伸ブロー：1.5Lボトル15.5g、エア回収で60％削減</b><span style="color:var(--muted)">加熱とエア回収の合わせ技で省エネ。</span></div>
+          </div>
+        </div>
+        <p class="note">実際のカードも同じ考え方で、幅が狭いと自動で1列に積み上がります。横スクロールは出ません。</p>
+      </section>
+
+      <section class="panel">
+        <h3>仕様メモ（テスト段階）</h3>
+        <dl class="spec">
+          <div><dt>表示先</dt><dd>Garoon個人ポータル</dd></div>
+          <div><dt>版</dt><dd>クラウド版想定</dd></div>
+          <div><dt>更新の考え方</dt><dd>ページ側を差し替え</dd></div>
+          <div><dt>Garoon側作業</dt><dd>初回の貼り付けのみ</dd></div>
+        </dl>
+        <ul>
+          <li><strong>代替案A：</strong>iframeが社内設定で弾かれる場合は、Garoonの「リンク集／お知らせ」に公開URLを置く形に切り替える</li>
+          <li><strong>代替案B：</strong>毎朝分をGaroon掲示板へ転記する運用は手作業が増えるため、テストでは非推奨</li>
+          <li><strong>注意：</strong>公開リンクを知る人は誰でも閲覧できます。社外秘のコメントはこのページに書かない</li>
+        </ul>
+      </section>
+    </aside>
+  </div>
+</div>
+
+<footer>
+  <p><span class="non-embed">樹脂成形ニュース（Garoon表示用）— </span>出典は各カードのリンク先（メーカー公式リリース、MONOist、プラスチックス・ジャパン、Plastics Machinery Manufacturingほか）。要約は公開情報に基づく編集部要約です。数値・日付は原文で最終確認してください。<br>2026年11月17日時点の収録：11件</p>
+</footer>
+
+<script>
+(function(){
+  var params = new URLSearchParams(location.search);
+  if(params.get('embed')==='1'){ document.body.classList.add('embed'); }
+  document.getElementById('previewEmbedBtn').addEventListener('click', function(){
+    document.body.classList.toggle('embed');
+    this.textContent = document.body.classList.contains('embed') ? '通常表示に戻す' : 'Garoon表示（embed）でこのページをプレビュー';
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+
+  // Filters
+  var method='all', region='all', query='';
+  var cards = Array.prototype.slice.call(document.querySelectorAll('#cards .card'));
+  var resultLine=document.getElementById('resultLine');
+  var empty=document.getElementById('emptyState');
+  function apply(){
+    var shown=0;
+    cards.forEach(function(c){
+      var okM = method==='all' || (c.getAttribute('data-methods')||'').split(' ').indexOf(method)>-1 || (method==='auto' && (c.getAttribute('data-methods')||'').indexOf('auto')>-1);
+      var okR = region==='all' || c.getAttribute('data-region')===region || (region==='domestic' && c.getAttribute('data-region')==='domestic') || (region==='overseas' && c.getAttribute('data-region')==='overseas');
+      var okQ = !query || (c.textContent+' '+(c.getAttribute('data-text')||'')).toLowerCase().indexOf(query.toLowerCase())>-1;
+      var show = okM && okR && okQ;
+      c.classList.toggle('hidden', !show);
+      if(show) shown++;
+    });
+    empty.classList.toggle('hidden', shown!==0);
+    resultLine.innerHTML = '<strong>'+shown+'件</strong> を表示中 — 注目順（テーマ別）。カードの「原文を読む」が出典です。';
+  }
+  document.getElementById('methodFilters').addEventListener('click', function(e){
+    var b=e.target.closest('[data-filter]'); if(!b) return;
+    method=b.getAttribute('data-filter');
+    this.querySelectorAll('[data-filter]').forEach(function(x){x.setAttribute('aria-pressed', x===b?'true':'false')});
+    apply();
+  });
+  document.getElementById('regionFilters').addEventListener('click', function(e){
+    var b=e.target.closest('[data-region]'); if(!b) return;
+    region=b.getAttribute('data-region');
+    this.querySelectorAll('[data-region]').forEach(function(x){x.setAttribute('aria-pressed', x===b?'true':'false')});
+    apply();
+  });
+  document.getElementById('q').addEventListener('input', function(){ query=this.value.trim(); apply(); });
+
+  // Garoon code generator
+  var urlInput=document.getElementById('pageUrl'), heightSel=document.getElementById('heightSel'), codeBox=document.getElementById('codeBox'), copyMsg=document.getElementById('copyMsg');
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+  function renderCode(){
+    var u=urlInput.value.trim() || '[公開URL]';
+    var sep = u.indexOf('?')>-1 ? '&' : '?';
+    var src = u==='[公開URL]' ? u+'?embed=1' : u+sep+'embed=1';
+    var code='<iframe src="'+src+'" width="100%" height="'+heightSel.value+'" style="border:0;border-radius:8px" loading="lazy" title="樹脂成形ニュース"></iframe>';
+    codeBox.textContent=code;
+    return code;
+  }
+  urlInput.addEventListener('input', renderCode);
+  heightSel.addEventListener('change', renderCode);
+  renderCode();
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    var code=renderCode();
+    function done(){ copyMsg.textContent='コピーしました。GaroonのHTMLポートレットに貼ってください。'; setTimeout(function(){copyMsg.textContent=''},4000); }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(code).then(done).catch(function(){ fallback(); }); } else { fallback(); }
+    function fallback(){ var ta=document.createElement('textarea'); ta.value=code; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); done();}catch(e){ copyMsg.textContent='コピーできませんでした。コード枠を長押し／選択してコピーしてください。'; } document.body.removeChild(ta); }
+  });
+
+  // Width simulation
+  var frame=document.getElementById('previewFrame');
+  document.querySelectorAll('[data-w]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('[data-w]').forEach(function(x){x.classList.remove('active')});
+      btn.classList.add('active');
+      frame.style.maxWidth=btn.getAttribute('data-w')+'px';
+    });
+  });
+})();
+</script>
+</body>
+</html>
